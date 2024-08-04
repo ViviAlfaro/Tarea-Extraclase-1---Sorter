@@ -28,10 +28,8 @@ public:
         // Buscar si la página está en una de las posiciones
         auto it = find(pageIndices.begin(), pageIndices.end(), pageIndex);
         if (it != pageIndices.end()) {
-            // Página está en memoria 
-            
+            // Página está en memoria (page hit)
             ++pageHits;
-            ++pages;
             return pages[it - pageIndices.begin()][offset];
         } else {
             // Página no está en memoria (page fault)
@@ -52,7 +50,7 @@ public:
         }
         
         // Reemplaza una página si todas están ocupadas
-        if (pageIndices[pageToReplace] != 1) {
+        if (pageIndices[pageToReplace] != -1) {
             // Guardar la página vieja en el archivo
             savePage(pageIndices[pageToReplace], pageToReplace);
         }
