@@ -3,7 +3,7 @@
 #include <vector> 
 #include <algorithm> //algoritmos como find
 #include <chrono> //medir el tiempo
-#include <cstring> //en relacion a cadenas y conversion de tipos 
+#include <cstring> //en relacion a cadenas y conversion
 #include <cstdlib>
 
 using namespace std;
@@ -28,8 +28,10 @@ public:
         // Buscar si la página está en una de las posiciones
         auto it = find(pageIndices.begin(), pageIndices.end(), pageIndex);
         if (it != pageIndices.end()) {
-            // Página está en memoria (page hit)
+            // Página está en memoria 
+            
             ++pageHits;
+            ++pages;
             return pages[it - pageIndices.begin()][offset];
         } else {
             // Página no está en memoria (page fault)
@@ -50,7 +52,7 @@ public:
         }
         
         // Reemplaza una página si todas están ocupadas
-        if (pageIndices[pageToReplace] != -1) {
+        if (pageIndices[pageToReplace] != 1) {
             // Guardar la página vieja en el archivo
             savePage(pageIndices[pageToReplace], pageToReplace);
         }
@@ -71,7 +73,7 @@ public:
     }
 
     size_t getPageFaults() const { return pageFaults; }
-    
+    size_t getPageHits() const { return pageHits; }
 
 private:
     string filePath;
