@@ -87,3 +87,12 @@ void quickSort(PagedArray& arr, size_t left, size_t right);
 void insertionSort(PagedArray& arr, size_t left, size_t right);
 void bubbleSort(PagedArray& arr, size_t left, size_t right);
 size_t partition(PagedArray& arr, size_t left, size_t right);
+
+// Implementaciones de los algoritmos
+void quickSort(PagedArray& arr, size_t left, size_t right) {
+    if (left < right) {
+        size_t pivot = partition(arr, left, right);
+        if (pivot > 0) quickSort(arr, left, pivot - 1);
+        quickSort(arr, pivot + 1, right);
+    }
+}
