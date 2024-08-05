@@ -150,6 +150,8 @@ int main(int argc, char* argv[]) {
             inputFilePath = argv[++i];
         } else if (strcmp(argv[i], "-output") == 0) {
             outputFilePath = argv[++i];
+        } else if (strcmp(argv[i], "-alg") == 0) {
+        algorithm = argv[++i];
        
         }
     }
@@ -164,14 +166,41 @@ int main(int argc, char* argv[]) {
     // leer los datos en el arreglo paginado
     ofstream outputFile(outputFilePath, ios::binary);
     ifstream inputFileStream(inputFilePath, ios::binary);
-
-
-
     vector<int> buffer(totalSize);
     inputFileStream.read(reinterpret_cast<char*>(buffer.data()), fileSize);
     inputFileStream.close(); // cierra el archivo despues de la lectura
 
-    for (size_t i = 0; i < totalSize; ++i) {
+    for (size_t i = 0; i < totalSize; ++i) { //copia los datos del buffer al pagedArray
         arr[i] = buffer[i];
     }
+
+    // ordena usando el algoritmo seleccionado 
+    auto start = high_resolution_clock::now(); //primero marca el tiempo antes de empezar el ordenamiento
+    if (algorithm == "QS") {
+        quickSort(arr, 0, totalSize - 1);
+    } else if (algorithm == "IS") {
+        insertionSort(arr, 0, totalSize - 1);
+    } else if (algorithm == "BS") {
+        bubbleSort(arr, 0, totalSize - 1);
+    } else {
+        cerr << "Invalid algorithm: " << algorithm << endl;
+        return 1;
+    }
+    auto end = high_resolution_clock::now();
+    duration<double> elapsed = end - start;
+
+    // escribir los datos ordenados al archivo de salida, los del pagedArray
+    for (size_t i = 0; i < totalSize; ++i) {
+        int value = arr[i];
+        outputFile.write(reinterpret_cast<const char*>(&value), sizeof(value));
+    }
+    outputFile.close();
+
+    // imprimir resumen
+    cout << "Time elapsed: " << elapsed.count() << " seconds" << endl;
+    cout << "Algorithm used: " << algorithm << endl;
+    cout << "Page faults: " << arr.getPageFaults() << endl;
+    
+
+    return 0;
 }
