@@ -81,3 +81,9 @@ private:
     size_t pageFaults;
     size_t pageHits;
 };
+
+// Funciones de ordenamiento
+void quickSort(PagedArray& arr, size_t left, size_t right);
+void insertionSort(PagedArray& arr, size_t left, size_t right);
+void bubbleSort(PagedArray& arr, size_t left, size_t right);
+size_t partition(PagedArray& arr, size_t left, size_t right);
