@@ -122,3 +122,56 @@ void insertionSort(PagedArray& arr, size_t left, size_t right) {
         arr[j] = key;
     }
 }
+
+void bubbleSort(PagedArray& arr, size_t left, size_t right) {
+    bool swapped;
+    do {
+        swapped = false;
+        for (size_t i = left; i < right; ++i) {
+            if (arr[i] > arr[i + 1]) {
+                swap(arr[i], arr[i + 1]);
+                swapped = true;
+            }
+        }
+        --right;
+    } while (swapped);
+}
+
+// Función principal
+int main(int argc, char* argv[]) {
+    if (argc != 7) { //verifica que el numero de argumentos proporcionados es correcto
+        cerr << "Usage: sorter –input <INPUT FILE PATH> -output <OUTPUT FILE PATH> -alg <ALGORITHM>" << endl;
+        return 1;
+    }
+
+    string inputFilePath, outputFilePath, algorithm; //inicia la lectura de los argumentos
+    for (int i = 1; i < argc; ++i) {
+        if (strcmp(argv[i], "-input") == 0) {
+            inputFilePath = argv[++i];
+        } else if (strcmp(argv[i], "-output") == 0) {
+            outputFilePath = argv[++i];
+       
+        }
+    }
+
+        // obtener el tamaño del archivo, abre el archivo de entrada en modo binario y en la posición final del archivo para determinar su tamaño total. 
+    ifstream inputFile(inputFilePath, ios::binary | ios::ate);
+    size_t fileSize = inputFile.tellg();
+    size_t totalSize = fileSize / sizeof(int);
+    inputFile.close();
+    PagedArray arr(inputFilePath, totalSize); // objeto que maneja el arreglo con paginacion
+
+    // leer los datos en el arreglo paginado
+    ofstream outputFile(outputFilePath, ios::binary);
+    ifstream inputFileStream(inputFilePath, ios::binary);
+
+
+
+    vector<int> buffer(totalSize);
+    inputFileStream.read(reinterpret_cast<char*>(buffer.data()), fileSize);
+    inputFileStream.close(); // cierra el archivo despues de la lectura
+
+    for (size_t i = 0; i < totalSize; ++i) {
+        arr[i] = buffer[i];
+    }
+}
