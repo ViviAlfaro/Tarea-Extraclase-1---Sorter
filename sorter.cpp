@@ -200,7 +200,7 @@ int main(int argc, char* argv[]) {
     cout << "Time elapsed: " << elapsed.count() << " seconds" << endl;
     cout << "Algorithm used: " << algorithm << endl;
     cout << "Page faults: " << arr.getPageFaults() << endl;
-    
+    cout << "Page hits: " << arr.getPageHits() << endl;
 
     return 0;
 }
