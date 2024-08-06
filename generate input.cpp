@@ -15,7 +15,7 @@ int main() { // funcion principal
     // crear archivo binario para escritura
     ofstream outFile(FILENAME, ios::binary); //offstream abre el arcivo para escritura
     if (!outFile) {
-        cerr << "Error: Could not open file for writing." << endl;
+        cerr << "Error: El archivo no se puede abrir." << endl;
         return 1;
     }
 
@@ -24,4 +24,10 @@ int main() { // funcion principal
         int num = rand(); // genera un número aleatorio
         outFile.write(reinterpret_cast<const char*>(&num), sizeof(num));
     }
+
+    // cerrar archivo
+    outFile.close();
+    cout << "Se ha generado correctamente" << endl;
+
+    return 0;
 }
