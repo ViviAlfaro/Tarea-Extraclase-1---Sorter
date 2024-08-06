@@ -176,14 +176,14 @@ int main(int argc, char* argv[]) {
 
     // ordena usando el algoritmo seleccionado 
     auto start = high_resolution_clock::now(); //primero marca el tiempo antes de empezar el ordenamiento
-    if (algorithm == "QS") {
+    if (algorithm == "QuickSort") {
         quickSort(arr, 0, totalSize - 1);
-    } else if (algorithm == "IS") {
+    } else if (algorithm == "InsertionSort") {
         insertionSort(arr, 0, totalSize - 1);
-    } else if (algorithm == "BS") {
+    } else if (algorithm == "BubbleSort") {
         bubbleSort(arr, 0, totalSize - 1);
     } else {
-        cerr << "Invalid algorithm: " << algorithm << endl;
+        cerr << "Algoritmo invalido" << algorithm << endl;
         return 1;
     }
     auto end = high_resolution_clock::now();
@@ -197,8 +197,8 @@ int main(int argc, char* argv[]) {
     outputFile.close();
 
     // imprimir resumen
-    cout << "Time elapsed: " << elapsed.count() << " seconds" << endl;
-    cout << "Algorithm used: " << algorithm << endl;
+    cout << "Tiempo " << elapsed.count() << " segundos" << endl;
+    cout << "Algoritmo: " << algorithm << endl;
     cout << "Page faults: " << arr.getPageFaults() << endl;
     cout << "Page hits: " << arr.getPageHits() << endl;
 
